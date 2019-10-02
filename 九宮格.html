@@ -5,45 +5,67 @@
 
 <head>
     <title> Index </title>
+    
 </head>
 
+
+
+<style>
+        td {
+            width: 150px ;
+            text-align:center;
+            cursor: pointer;
+        }
+    </style>
 <script>
-    function SetPoint(obj) {
-        //alert(obj);
-        obj.innerText = 'X';
-    }
-</script>
+        var flag = "";
+        function SetPoint(obj) {
+            //alert(obj);
+            if (obj.innerText != "") return; //空格裡面有東西就不能再按一次(不符合就離開)
+            if (flag == "X") {
+                obj.innerText = 'O';
+                flag = "O";
+            }
+            else {
+                obj.innerText = 'X';
+                flag = "X";
+            }
+    
+        }
+    </script>
 
 <body>
-    <table border="1" width="400px" height="400px">
-        <caption>
-            <h4>九宮格</h4>
-        </caption>
-        <thead>
+    <div style= "font-size: 50px">
+        <table border="1" width="400px" height="400px">
+            <caption>
+                <h4>九宮格</h4>
+            </caption>
+            <thead>
 
 
-            <tr>
+                <tr>
 
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                    <td id="a1" style="width: 100px" onclick="SetPoint(document.getElementById('a1'))"></td>
-                    <td id="a2" style="width: 100px" onclick="SetPoint(document.getElementById('a2'))"></td>
-                    <td id="a3" style="width: 100px" onclick="SetPoint(document.getElementById('a3'))"></td>
-            </tr>
-            <tr>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="a1" onclick="SetPoint(document.getElementById('a1'))"></td>
+                    <td id="a2" onclick="SetPoint(document.getElementById('a2'))"></td>
+                    <td id="a3" onclick="SetPoint(document.getElementById('a3'))"></td>
+                </tr>
+                <tr>
                     <td id="b1" onclick="SetPoint(document.getElementById('b1'))"></td>
                     <td id="b2" onclick="SetPoint(document.getElementById('b2'))"></td>
                     <td id="b3" onclick="SetPoint(document.getElementById('b3'))"></td>
-            </tr>
-            <tr>
+                </tr>
+                <tr>
                     <td id="c1" onclick="SetPoint(document.getElementById('c1'))"></td>
                     <td id="c2" onclick="SetPoint(document.getElementById('c2'))"></td>
                     <td id="c3" onclick="SetPoint(document.getElementById('c3'))"></td>
-            </tr>
-        </tbody>
-    </table>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>
