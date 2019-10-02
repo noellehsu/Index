@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-hant">
+
+<html>
+
+<head>
+    <title> Index </title>
+</head>
+
+<script>
+    function SetPoint(obj) {
+        //alert(obj);
+        obj.innerText = 'X';
+    }
+</script>
+
+<body>
+    <table border="1" width="400px" height="400px">
+        <caption>
+            <h4>¤E®c®æ</h4>
+        </caption>
+        <thead>
+
+
+            <tr>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                    <td id="a1" style="width: 100px" onclick="SetPoint(document.getElementById('a1'))"></td>
+                    <td id="a2" style="width: 100px" onclick="SetPoint(document.getElementById('a2'))"></td>
+                    <td id="a3" style="width: 100px" onclick="SetPoint(document.getElementById('a3'))"></td>
+            </tr>
+            <tr>
+                    <td id="b1" onclick="SetPoint(document.getElementById('b1'))"></td>
+                    <td id="b2" onclick="SetPoint(document.getElementById('b2'))"></td>
+                    <td id="b3" onclick="SetPoint(document.getElementById('b3'))"></td>
+            </tr>
+            <tr>
+                    <td id="c1" onclick="SetPoint(document.getElementById('c1'))"></td>
+                    <td id="c2" onclick="SetPoint(document.getElementById('c2'))"></td>
+                    <td id="c3" onclick="SetPoint(document.getElementById('c3'))"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
