@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Make a Form</title>
+</head>
+
+<body>
+
+    <!--按下送出，發mail給自己
+    最好用post-->
+
+    <form action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=ohyanana2@gmail.com&redirect=http://www.google.com" method="POST">
+
+        <!--fieldset: 變成一個區塊-->
+        <fieldset>
+            <legend>個人資料--必填</legend>
+
+
+            姓名：<input type="text" placeholder="請輸入姓名" name="field_name">
+            <br>
+            密碼：<input type="password" placeholder=" 請輸入密碼" name="field_pwd">
+            <br>
+            性別：
+            <input type="radio" name="gender"> 男生
+            <input type="radio" name="gender"> 女生
+            <input type="radio" name="gender"> 第三性
+            <br>
+        </fieldset>
+
+        <br>
+        <fieldset>
+            <legend>個人資料--興趣</legend>
+            興趣：
+            <input type="checkbox" name="gender" />音樂
+            <input type="checkbox" name="gender" />繪畫
+            <input type="checkbox" name="gender" />電影
+            <input type="checkbox" name="gender" />閱讀
+            <input type="checkbox" name="gender" />寫程式
+
+            <br>
+            專長： <textarea name="專長" id="fieldMultiLineText" cols="50" rows="5"></textarea>
+        </fieldset>
+        <br>
+
+        <fieldset>
+            <legend>個人資料--地址</legend>
+            郵遞區號：<input type="text" name="postcode">
+            <br>
+            縣市：<select name="city" name="citySelected">
+                <option value="1" selected>台北</option>
+                <option value="2">新竹</option>
+                <option value="3">台中</option>
+                <option value="4">嘉義</option>
+                <option value="5">台南</option>
+                <option value="6">高雄</option>
+            </select>
+
+            <br>
+
+            其他地址：<input type="text" name="otherAddress">
+
+
+
+
+        </fieldset>
+        <br>
+
+        <button>送件</button>
+        <button>清除</button>
+
+    </form>
+</body>
+
+</html>
