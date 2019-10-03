@@ -79,4 +79,13 @@
     position: absolute;
     Right: 50%;     /*top:20px ªí¥ÜÂ÷³»ºÝ20px*/
 
-
+ #ImageBackground2
+ {
+   position: relative;
+ }
+    
+#img11
+{
+  position: absolute;
+  Right: 50%; 
+}
