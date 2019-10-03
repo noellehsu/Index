@@ -5,7 +5,7 @@
 #shopeeTitle {
     position: absolute;
     Right: 50%;
-    /*top:20px ªí¥ÜÂ÷³»ºİ20px*/
+    /*top:20px è¡¨ç¤ºé›¢é ‚ç«¯20px*/
 }
 
 .img1 {
@@ -24,5 +24,8 @@
     display: flex;
     flex-grow: 1;
     flex-direction: column;
-    /* ³oÃä¥[column¡A¦]¬°§Ú­nÅıBC¨â­ÓImage±Æª½ªº¡A§Ú¤£­n±Æ¦¨ABC¤T­Ó¹Ï¤ùm¬O¾îªº */
+    /* é€™é‚ŠåŠ columnï¼Œå› ç‚ºæˆ‘è¦è®“BCå…©å€‹Imageæ’ç›´çš„ï¼Œæˆ‘ä¸è¦æ’æˆABCä¸‰å€‹åœ–ç‰‡éƒ½æ˜¯æ©«çš„ */
 }
+
+
+
