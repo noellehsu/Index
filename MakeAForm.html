@@ -8,18 +8,30 @@
     <title>Make a Form</title>
 </head>
 
+<script>
+
+
+
+
+
+</script>
+
 <body>
 
-    <!--按下送出，發mail給自己
-    最好用post-->
+    <!--按下送出，發mail給自己，方法用post-->
+    <form id="FormABC"
+        action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=ohyanana2@gmail.com&redirect=http://www.google.com"
+        method="POST">
+        <input type="text">
 
-    <form action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=ohyanana2@gmail.com&redirect=http://www.google.com" method="POST">
 
+        <!-- 下面這個程式碼要包住我要清除的text
+<input type="text">
+<input type="reset" value="清除表單">
+         -->
         <!--fieldset: 變成一個區塊-->
         <fieldset>
             <legend>個人資料--必填</legend>
-
-
             姓名：<input type="text" placeholder="請輸入姓名" name="field_name">
             <br>
             密碼：<input type="password" placeholder=" 請輸入密碼" name="field_pwd">
@@ -51,16 +63,14 @@
             郵遞區號：<input type="text" name="postcode">
             <br>
             縣市：<select name="city" name="citySelected">
-                <option value="1" selected>台北</option>
-                <option value="2">新竹</option>
-                <option value="3">台中</option>
-                <option value="4">嘉義</option>
-                <option value="5">台南</option>
-                <option value="6">高雄</option>
+                <option value="台北" selected>台北</option>
+                <option value="新竹">新竹</option>
+                <option value="台中">台中</option>
+                <option value="嘉義">嘉義</option>
+                <option value="台南">台南</option>
+                <option value="高雄">高雄</option>
             </select>
-
             <br>
-
             其他地址：<input type="text" name="otherAddress">
 
 
@@ -69,8 +79,8 @@
         </fieldset>
         <br>
 
-        <button>送件</button>
-        <button>清除</button>
+        <input type="submit" value="送件" />
+        <input type="reset" value="重新填寫">
 
     </form>
 </body>
