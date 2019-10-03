@@ -3,8 +3,7 @@
     padding: 10px;
     border: 2px blue solid;
   }
-  
-  
+ 
   #divYellow {
     padding: 10px;
     border: 2px yellow solid;
@@ -69,23 +68,3 @@
     border-left: 2px dotted;
     border-left: medium dashed green;
   }
-  
-  #shopeeBackground
-  {
-    position: relative;
-  }
-  #shopeeTitle
-  {
-    position: absolute;
-    Right: 50%;     /*top:20px ªí¥ÜÂ÷³»ºÝ20px*/
-
- #ImageBackground2
- {
-   position: relative;
- }
-    
-#img11
-{
-  position: absolute;
-  Right: 50%; 
-}
