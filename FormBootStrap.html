@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Form with bootstrap</title>
+
+    <!-- 引用bootstrap CSS 4.3.1 版本-->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>
+
+<script>
+    function getElement(name) {
+        return document.getElementById(name);
+    }
+
+    function Button_Submit() {
+        var isChecked = getElement("MustCheck").checked;
+        if (isChecked) return true;
+        alert("必須勾選同意!");
+        return false;
+    }
+
+    window.onload = function () {
+        getElement('FormABC').onsubmit = function () {
+            return Button_Submit();
+        };
+    };
+</script>
+
+<body>
+
+    <form id="FormABC"
+        action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=ohyanana2@gmail.com&redirect=http://www.google.com"
+        method="POST">
+
+   <!--沒有container方塊直接滿版-->
+        <div class="container">  
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-header bg-primary text-white">個人資料-必填</h5>
+                        <!--card-header會讓標題變大-->
+                        <div class="card-body">
+                            姓名：<input type="text" class="form-control" placeholder="請輸入姓名" name="field_name">
+                            <br>
+                            密碼：<input type="password" class="form-control" placeholder=" 請輸入密碼" name="field_pwd">
+                            <br>
+                            性別：
+                            <input type="radio" name="gender"> 男生
+                            <input type="radio" name="gender"> 女生
+                            <input type="radio" name="gender"> 第三性
+                            <br>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-header bg-info text-white">個人資料-興趣</h5>
+                        <!--card-header會讓標題變大-->
+                        <div class="card-body">
+                            興趣：
+                            <input type="checkbox" name="hobby" />音樂
+                            <input type="checkbox" name="hobby" />繪畫
+                            <input type="checkbox" name="hobby" />電影
+                            <input type="checkbox" name="hobby" />閱讀
+                            <input type="checkbox" name="hobby" />寫程式
+                        </div>
+                        專長：<textarea name="專長" class="form-control" cols="40" rows="4"></textarea>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div class="container">
+            <div class="row" margin-top='100px'>
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-header bg-warning text-white">個人資料-地址</h5>
+                        <div class="card-body">
+                            <br>
+                            郵遞區號:<input type="text" class="form-control" name="postcode">
+                            <br>
+                            縣市：<select name="city" name="citySelected">
+                                <option value="台北" selected>台北</option>
+                                <option value="新竹">新竹</option>
+                                <option value="台中">台中</option>
+                                <option value="嘉義">嘉義</option>
+                                <option value="台南">台南</option>
+                                <option value="高雄">高雄</option>
+                            </select>
+                            <br>
+                            <br>
+                            其他地址：<input type="text" class="form-control" name="otherAddress">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="checkbox" name="MustCheck" id="MustCheck" />我同意個資隨便使用
+
+                    <br>
+                    <br>
+                    <input type="submit" value="送件" />
+                    <input type="reset" value="重新填寫">
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+    </form>
+</body>
+
+</html>

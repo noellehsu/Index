@@ -46,41 +46,46 @@
         <input id="txbweight" type="text" placeholder="請輸入體重">
     </div> -->
 
-
-    <div class="input-group flex-nowrap" style="margin: 20px">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="addon-wrapping">身高(cm)</span>
+    <form>
+        <div class="input-group flex-nowrap" style="margin: 20px">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="addon-wrapping">身高(cm)</span>
+            </div>
+            <div class="col-md-3">
+                <input id="txbheight" type="text" class="form-control" placeholder="請輸入身高" aria-label="身高"
+                    aria-describedby="addon-wrapping">
+            </div>
         </div>
-        <div class="col-md-3">
-            <input id="txbheight" type="text" class="form-control" placeholder="請輸入身高" aria-label="身高"
-                aria-describedby="addon-wrapping">
+
+
+        <div class="input-group flex-nowrap" style="margin: 20px">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="addon-wrapping">體重(kg)</span>
+            </div>
+            <div class="col-md-3">
+                <input id="txbweight" type="text" class="form-control" placeholder="請輸入體重" aria-label="體重"
+                    aria-describedby="addon-wrapping">
+            </div>
         </div>
-    </div>
- 
 
-    <div class="input-group flex-nowrap" style="margin: 20px">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="addon-wrapping">體重(kg)</span>
+
+
+        <div class="row" style="margin: 20px">
+            <label id="Label1">結果 : </label><br />
         </div>
-        <div class="col-md-3">
-            <input id="txbweight" type="text" class="form-control" placeholder="請輸入體重" aria-label="體重"
-                aria-describedby="addon-wrapping">
+
+
+        <div class="row" style="margin: 20px">
+            <input id="Button1" type="button" class="btn btn-primary" onclick="Button1_Click();" value="計算結果" />
         </div>
+
+        <div class="row" style="margin: 20px">
+        <input type="reset" class="btn btn-primary"  value="清除表單">
     </div>
 
 
+    </form>
 
-    <div class="row" style="margin: 20px">
-        <label id="Label1">結果 : </label><br />
-    </div>
-
-
-    <div class="row" style="margin: 20px">
-        <input id="Button1" type="button" class="btn btn-primary" onclick="Button1_Click();" value="計算結果" />
-    </div>
-
-    </div>
-    </div>
 </body>
 
 </html>
