@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <title>BMI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- 引用bootstrap CSS 4.3.1 版本-->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>
+
+<script>
+    function Show(msg) {
+
+        document.getElementById('Label1').innerHTML += msg + "<br />";
+    }
+
+    function Button1_Click() {
+        let height = document.getElementById("txbheight").value;
+        let weight = document.getElementById("txbweight").value;
+        let bmi = GetBmi(height, weight);
+        Show("BMI是" + bmi);
+    }
+
+    function GetBmi(height, weight) {
+        var bmi = 0;
+        H = height / 100;
+        bmi = weight / (H * H);
+        return bmi;
+
+    }
+</script>
+
+<body>
+    <!-- 沒有bootstrap的原本樣子
+    <div class="row" style="margin: 20px">
+        <label>身高(cm)</label>
+        <input id="txbheight" type="text" placeholder="請輸入身高">
+        <label>體重(kg)</label>
+        <input id="txbweight" type="text" placeholder="請輸入體重">
+    </div> -->
+
+
+    <div class="input-group flex-nowrap" style="margin: 20px">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="addon-wrapping">身高(cm)</span>
+        </div>
+        <div class="col-md-3">
+            <input id="txbheight" type="text" class="form-control" placeholder="請輸入身高" aria-label="身高"
+                aria-describedby="addon-wrapping">
+        </div>
+    </div>
+ 
+
+    <div class="input-group flex-nowrap" style="margin: 20px">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="addon-wrapping">體重(kg)</span>
+        </div>
+        <div class="col-md-3">
+            <input id="txbweight" type="text" class="form-control" placeholder="請輸入體重" aria-label="體重"
+                aria-describedby="addon-wrapping">
+        </div>
+    </div>
+
+
+
+    <div class="row" style="margin: 20px">
+        <label id="Label1">結果 : </label><br />
+    </div>
+
+
+    <div class="row" style="margin: 20px">
+        <input id="Button1" type="button" class="btn btn-primary" onclick="Button1_Click();" value="計算結果" />
+    </div>
+
+    </div>
+    </div>
+</body>
+
+</html>

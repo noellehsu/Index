@@ -29,7 +29,7 @@ ul {
 header {
     padding: 8px 16px;
     background-color: #ffffff;
-    position: sticky;
+    position: sticky;   //把最上面的清單固定住，就算卷軸往下滑，上面清單還在
     top: 0;
     z-index: 50;
     border-bottom: 1px solid #dfdfdf;
