@@ -16,24 +16,28 @@
 </head>
 
 <script>
-    function Show(msg) {
-
-        document.getElementById('Label1').innerHTML += msg + "<br />";
+    function GetBmi(height, weight) {
+        var bmi = 0;
+        H = height / 100;
+        bmi = weight / (H * H);
+        return bmi;
     }
 
     function Button1_Click() {
         let height = document.getElementById("txbheight").value;
         let weight = document.getElementById("txbweight").value;
         let bmi = GetBmi(height, weight);
-        Show("BMI是" + bmi);
+        Show("你的BMI是" + bmi);
     }
 
-    function GetBmi(height, weight) {
-        var bmi = 0;
-        H = height / 100;
-        bmi = weight / (H * H);
-        return bmi;
+    function Show(msg) {
 
+        document.getElementById('Label1').innerHTML += msg + "<br />";
+    }
+
+    function Button2_Click() {
+        document.getElementById('Label1').innerHTML = "";
+        //重新呼叫getElementById方法，無論抓到甚麼value，一律不顯示
     }
 </script>
 
@@ -51,7 +55,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="addon-wrapping">身高(cm)</span>
             </div>
-            <div class="col-md-3">
+            <div>
                 <input id="txbheight" type="text" class="form-control" placeholder="請輸入身高" aria-label="身高"
                     aria-describedby="addon-wrapping">
             </div>
@@ -62,7 +66,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="addon-wrapping">體重(kg)</span>
             </div>
-            <div class="col-md-3">
+            <div>
                 <input id="txbweight" type="text" class="form-control" placeholder="請輸入體重" aria-label="體重"
                     aria-describedby="addon-wrapping">
             </div>
@@ -80,8 +84,8 @@
         </div>
 
         <div class="row" style="margin: 20px">
-        <input type="reset" class="btn btn-primary"  value="清除表單">
-    </div>
+            <input type="reset" class="btn btn-primary" onclick="Button2_Click();" value="清除表單">
+        </div>
 
 
     </form>
