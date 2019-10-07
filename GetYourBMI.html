@@ -35,22 +35,15 @@
         document.getElementById('Label1').innerHTML += msg + "<br />";
     }
 
-
     //清除表單按鈕
     function Button2_Click() {
         document.getElementById('Label1').innerHTML = "";
         //重新呼叫getElementById方法，無論抓到甚麼value，一律不顯示
     }
+
 </script>
 
 <body>
-    <!-- 沒有bootstrap的原本樣子
-    <div class="row" style="margin: 20px">
-        <label>身高(cm)</label>
-        <input id="txbheight" type="text" placeholder="請輸入身高">
-        <label>體重(kg)</label>
-        <input id="txbweight" type="text" placeholder="請輸入體重">
-    </div> -->
 
     <form>
         <div class="input-group flex-nowrap" style="margin: 20px">

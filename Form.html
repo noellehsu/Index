@@ -26,7 +26,7 @@
       return false;
     }
 
-    //當網頁載入完成後執行
+    //當網頁載入完成後執行(不然就把JS的程式碼放到最下方)
     window.onload = function () {
       //hook event(在FormABC被submit時...)
       getElement('FormABC').onsubmit = function () {

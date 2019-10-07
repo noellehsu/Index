@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BMI_JQuery</title>
+    <!-- 引用bootstrap CSS 4.3.1 版本-->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>
+
+
+<script> 
+//用jQuery版本寫BMI 
+//----------------//
+    function GetBmi(height, weight) {
+        var bmi = 0;
+        H = height / 100;
+        bmi = weight / (H * H);
+        return bmi;
+    }
+
+    function GetValue() {
+        var txbheight = $('#txbheight').val();
+        var txbweight = $('#txbweight').val();
+        var bmi = GetBmi(txbheight, txbweight);
+        $('#result').html('你的BMI是：'+ bmi);     //.html() 表示我要直接把值直接顯示在頁面上
+                                                 //也可以用.val() 或 .after() 試試看
+    }
+
+    //初始化
+    function init() {
+        $('#Button1').click(GetValue);   //這邊的GetValue不用加()因為他是委派，不是方法
+
+    }
+
+    // 打jpDocReady就會跳出一行函式，表示整個頁面載完再執行function
+    // 類似window.onload的意思
+    $(document).ready(function () {
+        init();
+    });
+
+
+
+
+
+// $(document).ready(function () {
+//   $(selector).change(function (e) { 
+      
+//   });
+// });
+
+//先抓下拉選單的value
+
+//設定在所有img身上
+
+
+
+
+//集體勾選/取消 
+//----------------//
+
+
+//當checkAll被點選之後
+ $('#CheckAll').click(fucntion(e){
+     var check = $('#CheckAll'.prop('checked') )
+}
+
+//讀取屬性值
+$("input").prop("checked");
+
+//設定屬性值
+$("img").attr("src",  "myimage.jpg");
+$("input").prop("checked", true);
+
+//刪除屬性
+$("p").removeAttr("id");
+//透過 jQuery設定或取得屬性值
+
+
+
+
+
+
+</script>
+
+
+
+
+<body>
+<!-- 用jQuery版本寫BMI -->
+    <form>
+        <h1>BMI計算(jQuery版本)</h1>
+
+        <div class="input-group flex-nowrap" style="margin: 20px">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="addon-wrapping">身高(cm)</span>
+            </div>
+            <div>
+                <input id="txbheight" type="text" class="form-control" placeholder="請輸入身高" aria-label="身高"
+                    aria-describedby="addon-wrapping">
+            </div>
+        </div>
+
+
+        <div class="input-group flex-nowrap" style="margin: 20px">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="addon-wrapping">體重(kg)</span>
+            </div>
+            <div>
+                <input id="txbweight" type="text" class="form-control" placeholder="請輸入體重" aria-label="體重"
+                    aria-describedby="addon-wrapping">
+            </div>
+        </div>
+
+
+        <div class="row" style="margin: 20px">
+            <span id="result"></span>
+        </div>
+
+        <div class="row" style="margin: 20px">
+            <input id="Button1" type="button" class="btn btn-primary" value="計算結果" />
+        </div>
+
+        <div class="row" style="margin: 20px">
+            <input type="reset" class="btn btn-primary" onclick="Button2_Click();" value="清除表單">
+        </div>
+    </form>
+<br>
+<br>
+<br>
+
+
+
+
+
+<!-- 集體勾選/取消-->
+
+<div class="row" style="margin:10px">
+        <div class="col-12">
+            <input id="CheckAll" type="checkbox" />勾選全部
+            <div id="CheckBoxGroup">
+                <input type="checkbox" />項目1
+                <input type="checkbox" />項目2
+                <input type="checkbox" />項目3
+                <input type="checkbox" />項目4
+                <input type="checkbox" />項目5
+                <input type="checkbox" />項目6
+                <input type="checkbox" />項目7
+                <input type="checkbox" />項目8
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
