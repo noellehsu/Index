@@ -13,6 +13,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+    <style>
+        .card {
+            margin-top: 30px;
+        }
+    </style>
+
 </head>
 
 <script>
@@ -40,13 +46,13 @@
         action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=ohyanana2@gmail.com&redirect=http://www.google.com"
         method="POST">
 
-   <!--沒有container方塊直接滿版-->
-        <div class="container">  
+        <!--沒有container方塊直接滿版-->
+        <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
-                        <h5 class="card-header bg-primary text-white">個人資料-必填</h5>
                         <!--card-header會讓標題變大-->
+                        <h5 class="card-header bg-primary text-white">個人資料-必填</h5>
                         <div class="card-body">
                             姓名：<input type="text" class="form-control" placeholder="請輸入姓名" name="field_name">
                             <br>
