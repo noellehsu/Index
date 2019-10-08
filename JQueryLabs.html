@@ -12,12 +12,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+    <style>
+        .br15 {
+            border-radius: 15px;
+        }
+
+        .br30 {
+            border-radius: 30px;
+        }
+
+        .br50 {
+            border-radius: 50px;
+        }
+    </style>
+
+
 </head>
 
 
-<script> 
-//用jQuery版本寫BMI 
-//----------------//
+<script>
+    //用jQuery版本寫BMI 
+    //----------------//
     function GetBmi(height, weight) {
         var bmi = 0;
         H = height / 100;
@@ -29,71 +44,84 @@
         var txbheight = $('#txbheight').val();
         var txbweight = $('#txbweight').val();
         var bmi = GetBmi(txbheight, txbweight);
-        $('#result').html('你的BMI是：'+ bmi);     //.html() 表示我要直接把值直接顯示在頁面上
-                                                 //也可以用.val() 或 .after() 試試看
+        $('#result').html('你的BMI是：' + bmi); //.html() 表示我要直接把值直接顯示在頁面上
+        //也可以用.val() 或 .after() 試試看
     }
 
     //初始化
     function init() {
-        $('#Button1').click(GetValue);   //這邊的GetValue不用加()因為他是委派，不是方法
+        $('#Button1').click(GetValue); //這邊的GetValue不用加()因為他是委派，不是方法
 
     }
 
-    // 打jpDocReady就會跳出一行函式，表示整個頁面載完再執行function
-    // 類似window.onload的意思
+
+    //集體勾選/取消 
+    //----------------//
+
+
+    //當checkAll被點選之後
+
+
     $(document).ready(function () {
-        init();
+        $("#CheckAll").click(function () {
+            if ($("#CheckAll").prop("checked")) { //如果全選按鈕有被選擇的話是true
+                $("#CheckBoxGroup input").each(function () {
+                    $(this).prop("checked", true); //所有項目被勾選
+                })
+            } else {
+                $("#CheckBoxGroup input").each(function () {
+                    $(this).prop("checked", false); //所有項目被取消勾選
+                })
+            }
+        })
+    })
+
+
+    //讀取屬性值
+    //$("input").prop("checked");
+
+    //設定屬性值
+    //$("img").attr("src",  "myimage.jpg");
+    //$("input").prop("checked", true);
+
+    //刪除屬性
+    //$("p").removeAttr("id");
+    //透過 jQuery設定或取得屬性值
+
+
+
+    //改變圖片圓角
+    //----------------//
+
+    $(document).ready(function () {
+        $('#sel01').change(function (e) {
+            var val = $(this).val();  //當下拉式選單選到12px這個value，就要addClass()加上同樣value的圓角
+            $('img').removeClass();
+            $('img').addClass(val);
+
+        });
+    });
+    $(document).ready(function () {
+        $('img').hover(function () {   
+            $(this).css("cursor", "pointer"); //滑鼠移至圖片就會變成手指鼠標
+            $(this).css("transform", "scale(1.1)").css("transition-duration", "0.1s"); //讓圖片變大
+        }, function () {
+            $(this).css("transform", "scale(1)").css("transition-duration", "0.1s");
+        });
     });
 
-
-
-
-
-// $(document).ready(function () {
-//   $(selector).change(function (e) { 
-      
-//   });
-// });
-
-//先抓下拉選單的value
-
-//設定在所有img身上
-
-
-
-
-//集體勾選/取消 
-//----------------//
-
-
-//當checkAll被點選之後
- $('#CheckAll').click(fucntion(e){
-     var check = $('#CheckAll'.prop('checked') )
-}
-
-//讀取屬性值
-$("input").prop("checked");
-
-//設定屬性值
-$("img").attr("src",  "myimage.jpg");
-$("input").prop("checked", true);
-
-//刪除屬性
-$("p").removeAttr("id");
-//透過 jQuery設定或取得屬性值
-
-
-
-
-
-
+    // 打jpDocReady就會跳出一行函式，表示整個頁面載完再執行function
+    // 類似window.onload的意思
+    // $(document).ready(function () {
+    //     init();
+    // });
 </script>
 
 
 
 
 <body>
-<!-- 用jQuery版本寫BMI -->
+    <!-- 用jQuery版本寫BMI -->
     <form>
         <h1>BMI計算(jQuery版本)</h1>
 
@@ -131,17 +159,13 @@ $("p").removeAttr("id");
             <input type="reset" class="btn btn-primary" onclick="Button2_Click();" value="清除表單">
         </div>
     </form>
-<br>
-<br>
-<br>
+    <br>
+    <br>
+    <br>
 
+    <!-- 集體勾選/取消-->
 
-
-
-
-<!-- 集體勾選/取消-->
-
-<div class="row" style="margin:10px">
+    <div class="row" style="margin:10px">
         <div class="col-12">
             <input id="CheckAll" type="checkbox" />勾選全部
             <div id="CheckBoxGroup">
@@ -156,6 +180,39 @@ $("p").removeAttr("id");
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    <br>
+
+    <!-- 改變圖片圓角 -->
+
+    <!-- 下拉式選單 -->
+    <div id="ImgGroup2" class="row" style="margin:10px; padding-top:100px">
+        <div class="col-12">
+            <select id="sel01">
+                <option value="br15">15px</option>
+                <option value="br30">30px</option>
+                <option value="br50">50px</option>
+            </select>
+        </div>
+        <br>
+        <br>
+        <br>
+
+        <div class="col-4">
+            <img src="https://cdn3-www.dogtime.com/assets/uploads/gallery/french-bulldog-dog-breed-pictures/1-puppy.jpg"
+                style="width:100%" class="img-responsive" />
+        </div>
+        <div class="col-4">
+            <img src="https://secure.img1-fg.wfcdn.com/im/77964071/resize-h600-w600%5Ecompr-r85/4307/43074644/Sleeping++French+Bulldog+Puppy+Statue.jpg"
+                style="width:100%" class="img-responsive" />
+        </div>
+        <div class="col-4">
+            <img src="https://cdn.shopify.com/s/files/1/0598/4081/products/IMG_7690.JPG?v=1545359062" style="width:100%"
+                class="img-responsive" />
+        </div>
+    </div>
+
 
 </body>
 
