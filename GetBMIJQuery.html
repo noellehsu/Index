@@ -15,35 +15,48 @@
 
 </head>
 
-<script>
-    function GetBmi(height, weight) {
-        var bmi = 0;
-        H = height / 100;
-        bmi = weight / (H * H);
-        return bmi;
+<script>  
+     //計算結果
+     function Show(msg) {
+        //document.getElementById('result').innerHTML += msg + "<br />";
+        $('#result').html($('#result').html() + msg + "<br />");
     }
+    
+    //JavaScript中的物件可以設計方法
+    var BmiObj = {
+        height: 0,
+        weight: 0,
+        GetBmi: function () {
+            H = this.height / 100;
+            bmi = this.weight / (H * H) //這邊的this指的是BmiObj物件
+            return bmi;
+        }
+    };
+   
 
     function Button1_Click() {
-        let height = document.getElementById("txbheight").value;
-        let weight = document.getElementById("txbweight").value;
-        let bmi = GetBmi(height, weight);
+
+        BmiObj.height = $('#txbheight').val();
+        BmiObj.weight = $('#txbweight').val();
+        let bmi = BmiObj.GetBmi();
         Show("你的BMI是" + bmi);
     }
 
-    function Show(msg) {
-        document.getElementById('result').innerHTML += msg + "<br />";
-    }
-
-    //清除表單按鈕
+    //清除表單
     function Button2_Click() {
-        document.getElementById('result').innerHTML = "";
-        //重新呼叫getElementById方法，無論抓到甚麼value，一律不顯示
+        //document.getElementById('result').innerHTML = "";
+        $('#result').html(""); 
     }
 
+    //初始化
+    $(document).ready(function () {
+        $('#Button1').click(Button1_Click);
+        $('#Button2').click(Button2_Click);
+    });
 </script>
 
 <body>
-
+    <h1> 使用物件的方式來計算BMI</h1>
     <form>
         <div class="input-group flex-nowrap" style="margin: 20px">
             <div class="input-group-prepend">
@@ -74,11 +87,11 @@
 
 
         <div class="row" style="margin: 20px">
-            <input id="Button1" type="button" class="btn btn-primary" onclick="Button1_Click();" value="計算結果" />
+            <input id="Button1" type="button" class="btn btn-danger" value="計算結果" />
         </div>
 
         <div class="row" style="margin: 20px">
-            <input type="reset" class="btn btn-primary" onclick="Button2_Click();" value="清除表單">
+            <input id="Button2" type="reset" class="btn btn-danger" value="清除表單">
         </div>
 
 
