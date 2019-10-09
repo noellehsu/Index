@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-TW">
+
+<head>
+    <title>Object and Error test</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script>
+        //序列化
+        var str = JSON.stringify(object);
+        //反序列化
+        var obj = JSON.parse(str);
+
+
+        function Show(msg) {
+            document.getElementById('Label1').innerHTML += msg + "<br />";
+        }
+
+        var obj = {
+            a: 100,
+            B: "test"
+        };
+        var arr = [123, 456, "abc", true, obj];
+
+        function Button1_Click() {
+            try {
+                Show(`obj : ${obj}`);
+                //get JSON
+                Show(`JSON.stringify(obj) : ${JSON.stringify(obj)}`);
+                //show arr
+                Show(`arr : ${arr}`);
+                //get JSON
+                Show(`JSON.stringify(arr) : ${JSON.stringify(arr)}`);
+                obj.NoThisProperty = "30";
+                Show(`No This property: ${obj.NoThisProperty}`);
+                NoThisvariable = "30";
+                Show(`No This variable : ${NoThisvariable}`);
+            } catch (error) {
+                Show(`ERROR : ${error}`);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="row" style="margin: 10px">
+        <div class="col-6">
+            <label id="Label1"></label><br />
+            <input type="button" id="Button1" onclick="Button1_Click();" value="Test" />
+        </div>
+    </div>
+</body>
+
+</html>
