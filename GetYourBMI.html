@@ -32,12 +32,12 @@
 
     function Show(msg) {
 
-        document.getElementById('Label1').innerHTML += msg + "<br />";
+        document.getElementById('result').innerHTML += msg + "<br />";
     }
 
     //清除表單按鈕
     function Button2_Click() {
-        document.getElementById('Label1').innerHTML = "";
+        document.getElementById('result').innerHTML = "";
         //重新呼叫getElementById方法，無論抓到甚麼value，一律不顯示
     }
 
@@ -70,7 +70,7 @@
 
 
         <div class="row" style="margin: 20px">
-            <label id="Label1"></label><br />
+            <label id="result"></label><br />
         </div>
 
 

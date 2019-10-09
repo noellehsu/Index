@@ -43,7 +43,17 @@
         }
     </style>
 
+<script>
+ $(document).ready(function () {
+        $('#authorPics img').hover(function () {   
+            $(this).css("cursor", "pointer"); //滑鼠移至圖片就會變成手指鼠標
+            $(this).css("transform", "scale(1.1)").css("transition-duration", "0.1s"); //讓圖片變大
+        }, function () {
+            $(this).css("transform", "scale(1)").css("transition-duration", "0.1s");
+        });
+    });
 
+</script>
 
 </head>
 
@@ -133,7 +143,7 @@
         </p>
     </div>
 
-    <table width="1200px" align="center">
+    <table id = "authorPics" width="1200px" align="center">
         <tr align="center">
             <td>
                 <div class="container">
