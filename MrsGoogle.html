@@ -1,0 +1,164 @@
+ <!DOCTYPE html>
+ <html lang="en">
+
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <title>Document</title>
+     <!-- 引用bootstrap CSS 4.3.1 版本-->
+     <link rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+
+     <script>
+         //當頁面載入完成後
+         $(document).ready(function () {
+             $('#LeftTo').click(function (e) {
+                 LeftToTranslate();
+             });
+
+             $('#RightTo').click(function (e) {
+                 RightToTranslate();
+             });
+         });
+
+         function LeftToTranslate() {
+             var source = $('#text1').val();
+
+             //非同步呼叫方法   
+             //呼叫ajax方法，{}裡面傳的是物件
+             //success是方法，會在ajax被成功呼叫後被執行
+             $.ajax({
+                 type: "post", //http verb
+                 headers: {
+                     //http header
+                     "Ocp-Apim-Subscription-Key": "fc0ffe74d46447f1be072d3f38d9aef8",
+                     "Content-Type": "application/json"
+                 },
+                 //url可以貼到postman 測試
+                 url: "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=en&to=fr&to=th",
+                 data: JSON.stringify([{
+                     "Text": source
+                 }]), //要翻譯的文字從哪裡來
+
+                 //callback:呼叫遠端服務後的回傳結果
+                 //translation[0]看到英文回傳
+                 //translation[1]看到法文回傳
+
+                 dataType: "json",
+                 success: function (response) {
+                     if ($("#selectEN2").prop("selected")) {
+                         $('#text2').val(response[0].translations[0].text);
+                     }
+                     if ($("#selectFR2").prop("selected")) {
+                         $('#text2').val(response[0].translations[1].text);
+                     }
+                     if ($("#selectTH2").prop("selected")) {
+                         $('#text2').val(response[0].translations[2].text);
+                     }
+                 }
+             });
+         }
+
+         function RightToTranslate() {
+             var source2 = $('#text2').val();
+             $.ajax({
+                 type: "post",
+                 headers: {
+                     "Ocp-Apim-Subscription-Key": "fc0ffe74d46447f1be072d3f38d9aef8",
+                     "Content-Type": "application/json"
+                 },
+                 url: "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=zh-Hant&to=en&to=fr&to=th",
+                 data: JSON.stringify([{
+                     "Text": source2
+                 }]),
+                 dataType: "json",
+                 success: function (response) {
+                     if ($("#selectCH1").prop("selected")) {
+                         $('#text1').val(response[0].translations[0].text);
+                     }
+                     if ($("#selectEN1").prop("selected")) {
+                         $('#text1').val(response[0].translations[1].text);
+                     }
+                     if ($("#selectFR1").prop("selected")) {
+                         $('#text1').val(response[0].translations[2].text);
+                     }
+                     if ($("#selectTH1").prop("selected")) {
+                         $('#text1').val(response[0].translations[3].text);
+                     }
+                 }
+             });
+         }
+
+         //下面的文件可以看不同語言的簡稱
+         //https://docs.microsoft.com/zh-tw/azure/cognitive-services/translator/language-support
+     </script>
+
+
+
+
+
+ </head>
+
+ <body>
+     <div class="container">
+         <div class="row">
+             <div class="col-md-5">
+                 <div class="card">
+                     <!--card-header會讓標題變大-->
+                     <div>
+                         <h5 class="card-header bg-primary text-white">
+                            <select>
+                                 <option id="selectCH1">中文</option>
+                                 <option id="selectEN1">英文</option>
+                                 <option id="selectFR1">法文</option>
+                                 <option id="selectTH1">泰文</option>
+                             </select>
+                         </h5>
+                     </div>
+
+                     <div class="card-body">
+                         <textarea id="text1" class="form-control" cols="40" rows="4"></textarea>
+                     </div>
+                 </div>
+             </div>
+
+             <div class="col-md-2">
+                 <input type="button" id="LeftTo" class="btn btn-primary" value="→">
+                 <br>
+                 <br>
+                 <input type="button" id="RightTo" class="btn btn-primary" value="←">
+             </div>
+
+             <div class="col-md-5">
+                 <div class="card">
+                     <!--card-header會讓標題變大-->
+                     <div>
+                         <h5 class="card-header bg-primary text-white">
+                             <select>
+                                 <option id="selectEN2">英文</option>
+                                 <option id="selectFR2">法文</option>
+                                 <option id="selectTH2">泰文</option>
+                             </select>
+                         </h5>
+
+                     </div>
+
+
+                     </h5>
+                     <div class="card-body">
+                         <textarea id="text2" class="form-control" cols="40" rows="4"></textarea>
+                     </div>
+                 </div>
+             </div>
+
+         </div>
+     </div>
+
+ </body>
+
+ </html>

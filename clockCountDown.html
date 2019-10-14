@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 引用bootstrap CSS 4.3.1 版本-->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        /* 下載電子鐘字型 */
+        @font-face {
+            font-family: Cursed Timer;
+            src: url('CursedTimerUlil-Aznm.ttf');
+        }
+    </style>
+
+</head>
+
+<script>
+    var counter = -1;
+    var timeLeft = 1200;
+    var isPaused = false;
+
+    function ButtonStart() {
+        isPaused = false;
+        setup();
+    }
+
+    function ButtonStop() {
+        isPaused = true;
+    }
+
+    function ButtonContinue() {
+        ButtonStart();
+    }
+
+    function setup() {
+
+        counter++;
+
+        function convertSeconds(s) {
+            var min = Math.floor(s / 60); //floor()無條件捨去小數點
+            var sec = s % 60;
+            return min + ':' + sec;
+        }
+        if (isPaused == false) setTimeout(setup, 1000);
+        document.getElementById('label1').innerHTML = convertSeconds(timeLeft - counter);
+
+
+    }
+
+    $(document).ready(function () {
+        $('#ButtonStart').click(ButtonStart);
+        $('#ButtonStop').click(ButtonStop);
+        $('#ButtonContinue').click(ButtonContinue);
+    });
+</script>
+
+
+<body>
+    <label id="label1" style="font-family: Cursed Timer; font-size:70px">00:00</label>
+    <br>
+    <input type="button" class="btn btn-danger" id="ButtonStart" value="倒數二十分鐘" />
+    <br>
+    <br>
+    <input type="button" class="btn btn-primary" id="ButtonStop" value="暫停" />
+    <input type="button" class="btn btn-primary" id="ButtonContinue" value="繼續" />
+</body>
+
+</html>
