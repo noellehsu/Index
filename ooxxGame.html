@@ -31,7 +31,7 @@
         HasWinner() {
 
             //橫豎判斷
-            for (let i = 0; i < 3; i++) {
+            for (let i = 0; i <= 2; i++) {
                 if(this.dat[i][0] == this.dat[i][1] && this.dat[i][1] == this.dat[i][2])
                 return this.dat[i][0];
                 if(this.dat[0][i] == this.dat[1][i] && this.dat[1][i] == this.dat[2][i])
