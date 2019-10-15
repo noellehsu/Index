@@ -60,6 +60,7 @@
         }
 
 
+
         //當我點選匯出
         function ButtonShowExport() {
             //把dat這個JSON檔轉為string才能放在文字方塊
@@ -134,7 +135,7 @@
         }
 
 
-        //儲存資料SaveData()
+        //儲存資料到記憶體
         function SaveData() {
             var str = JSON.stringify(dat);
             localStorage.setItem('Directory', str);
@@ -159,8 +160,8 @@
             $('#ButtonShowExport').click(ButtonShowExport);
             $('#ButtonShowImport').click(ButtonShowImport);
             $('#ButtonImport').click(ButtonImport);
-            $('ButtonUpdate').click(ButtonUpdate); //修改鍵
-            $('ButtonDelete').click(ButtonDelete);
+            $('#ButtonUpdate').click(ButtonUpdate); //修改鍵
+            $('#ButtonDelete').click(ButtonDelete);
 
 
             //參考官網: https://datatables.net/examples/advanced_init/events_live.html
