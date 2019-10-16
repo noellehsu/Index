@@ -166,7 +166,7 @@
 
       for (let i = 1; i < 4; i) {
         fourNumber[i] = createNumber();
-        if (fourNumber[i] != fourNumber[i - 1])
+        if (fourNumber[i] != fourNumber[0] && fourNumber[i] != fourNumber[i - 1] && fourNumber[i] != fourNumber[i - 2])
           i++;
       }
       computerFour = fourNumber;
@@ -196,6 +196,9 @@
       for (var i = 0; i < 4; i++) {
         if (computerFour[i] == userGuessArray[i]) {
           B[i] = computerFour[i];
+          B=B.filter(function(v){return v!==''});  // 排除空值empty
+          //B=B.filter(Boolean);   這樣寫會不小心排除0
+              
         }
         numOfB = B.length;
       }
@@ -219,6 +222,10 @@
       var newNode = document.createElement('li');
       newNode.innerHTML = numOfA + 'A' + numOfB + 'B';
       var guessResults = target.appendChild(newNode) + $('#userGuess').val();
+
+      
+      //$("p").html("Hello <b>world</b>!");
+      //參考文章(比較html()跟val()差別):https://dotblogs.com.tw/brooke/2015/03/04/150623
     }
 
     $(document).ready(function () {
