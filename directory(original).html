@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 引用bootstrap CSS 4.3.1 版本-->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!--使用 https://datatables.net/  這段引用如果放在JQuery引用之上會報錯-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+        //老師的github source code: https://github.com/isdaviddong/Example-frontend-Phonebook/blob/master/%E9%80%9A%E8%A8%8A%E9%8C%84.html
+        //預設資料
+        //注意:dat是JSON格式
+        var dat = [
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
+        ];  
+
+        //當我按新增時，用Model Dialog顯示
+        function ButtonAddDataWindow() {
+            $('#ModalAddNew').modal();
+        }
+
+        //具體執行新增
+        function ButtonAddData() {
+            //取得資料
+            var item = [
+                $('#field_name').val(),
+                $('#field_birthday').val(),
+                $('#field_phone').val(),
+                $('#field_email').val(),
+                $('#field_address').val()
+            ];
+
+            //清空UI
+            $('#field_name').val('');
+            $('#field_birthday').val('');
+            $('#field_phone').val('');
+            $('#field_email').val('');
+            $('#field_address').val('');
+
+            //新增資料
+            dat.push(item);
+
+            //儲存資料
+            //資料有變更時一定要呼叫SaveData()
+            SaveData();
+
+            //重新載入資料
+            LoadData();
+        }
+
+
+
+        //當我點選匯出
+        function ButtonShowExport() {
+            //把dat這個JSON檔轉為string才能放在文字方塊
+            var str = JSON.stringify(dat);
+
+            //填入field_DataJSON文字方塊 
+            $('#field_DataJSON').val(str);
+            $('#field_DataJSON').attr('readonly', 'readonly');
+
+            //當我匯出資料時，匯入鍵不能按
+            $('#ButtonImport').attr('disabled', 'true');
+
+            //用Model Dialog顯示
+            $('#ModalDataExport').modal();
+        }
+
+
+        //當我點選匯入
+        function ButtonShowImport() {
+            $('#field_DataJSON').val('');
+            $('#field_DataJSON').attr('readonly', false);
+            $('#ButtonImport').removeAttr('disabled');
+            $('#ModalDataExport').modal();
+        }
+
+        //匯入鍵
+        function ButtonImport() {
+            dat = JSON.parse($('#field_DataJSON').val());
+            RefreshData();
+        }
+
+
+
+        function ButtonUpdate() {
+
+            var newItem = [
+                $('#EditField_name').val(),
+                $('#EditField_birthday').val(),
+                $('#EditField_phone').val(),
+                $('#EditField_email').val(),
+                $('#EditField_address').val()
+            ];
+
+            //找到當前筆數，直接置換
+            var n = dat.indexOf(CurrentEditItem);
+            dat[n] = newItem;
+            RefreshData();
+            SaveData();
+        }
+
+
+        function ButtonDelete() {
+            var n = dat.indexOf(CurrentEditItem);
+
+            //只刪除當下點到的一筆
+            dat.splice(n, 1);
+            RefreshData();
+            SaveData();
+        }
+
+
+        //先從localStorage載入資料，再呼叫RefreshData
+        //LoadData 把新增的dat存到硬碟
+        function LoadData() {
+            if (localStorage.getItem('Directory') != null) {
+                var str = localStorage.getItem('Directory');
+
+                //把str轉成JSON檔，取回資料
+                dat = JSON.parse(str);
+            }
+            RefreshData();
+        }
+
+
+        //儲存資料到記憶體
+        function SaveData() {
+            var str = JSON.stringify(dat);
+            localStorage.setItem('Directory', str);
+        }
+
+
+        //refresh datatable 抓記憶體中的dat物件
+        function RefreshData() {
+            DataTable.clear(); //清空資料
+            DataTable.rows.add(dat); //重新顯示
+            DataTable.draw();
+        }
+
+        $(document).ready(function () {
+            // 引用DataTables的code
+            DataTable = $('#Table1').DataTable({
+                data: dat
+            });
+
+            $('#ButtonAddDataWindow').click(ButtonAddDataWindow);
+            $('#ButtonAddData').click(ButtonAddData);
+            $('#ButtonShowExport').click(ButtonShowExport);
+            $('#ButtonShowImport').click(ButtonShowImport);
+            $('#ButtonImport').click(ButtonImport);
+            $('#ButtonUpdate').click(ButtonUpdate); //修改鍵
+            $('#ButtonDelete').click(ButtonDelete);
+
+
+            //參考官網: https://datatables.net/examples/advanced_init/events_live.html
+            $('#Table1 tbody').on('click', 'tr', function () {
+                //取得當前點選的資料
+                CurrentEditItem = DataTable.row(this).data(); //CurrentEditItem秀出來的是陣列
+                $('#ModalEdit').modal();
+                $('#EditField_name').val(CurrentEditItem[0]);
+                $('#EditField_birthday').val(CurrentEditItem[1]);
+                $('#EditField_phone').val(CurrentEditItem[2]);
+                $('#EditField_email').val(CurrentEditItem[3]);
+                $('#EditField_address').val(CurrentEditItem[4]);
+
+            });
+
+            LoadData();
+            //這邊務必要加LoadData!!!!不然dat只存在硬碟無法跑到前端
+
+        });
+
+    </script>
+
+
+</head>
+
+
+
+<body>
+    <!-- navibar -->
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <ul class="navbar-nav">
+            <div class="container">
+                <div class="row" style="margin:10px">
+                    <div class="col-lg-12">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">個人通訊錄</a>
+                        </li>
+        </ul>
+        <button id="ButtonAddDataWindow" type="button" class="btn btn-info btn-lg" data-toggle="modal"
+            data-target="#myModal">新增</button>
+        <button id="ButtonShowImport" type="button" class="btn btn-danger" style="margin-left: 10px">匯入</button>
+        <button id="ButtonShowExport" type="button" class="btn btn-danger" style="margin: 10px">匯出</button>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="text" placeholder="輸入搜尋文字">
+            <button class="btn btn-success" style="margin-left:10px" type="submit">Search</button>
+        </form>
+        </div>
+        </div>
+        </div>
+    </nav>
+
+    <!-- 表格標頭 -->
+    <div class="container">
+        <div class="row" style="margin: 10px">
+            <div class="col-md-12">
+                <table id="Table1" class="display">
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>生日</th>
+                            <th>電話</th>
+                            <th>email</th>
+                            <th>地址</th>
+                        </tr>
+                    </thead>
+                    <!-- <tbody>
+            </tr>
+            <tr>
+                <td>Haley Kennedy</td>
+                <td>Senior Marketing Designer</td>
+                <td>London</td>
+                <td>43</td>
+                <td>2012/12/18</td>
+            </tr>
+            <tr>
+                <td>Tatyana Fitzpatrick</td>
+                <td>Regional Director</td>
+                <td>London</td>
+                <td>19</td>
+                <td>2010/03/17</td>
+            </tr>
+            <tr>
+                <td>Michael Silva</td>
+                <td>Marketing Designer</td>
+                <td>London</td>
+                <td>66</td>
+                <td>2012/11/27</td>
+            </tr>
+        </tbody> -->
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增資料 -->
+    <div class="modal fade" id="ModalAddNew">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">新增個人資料</h4>
+                    <!-- 能讓右上角出現x，關閉視窗 -->
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form>
+                        <label>姓名</label>
+                        <input id="field_name" type="text" class="form-control" />
+                        <label>生日</label>
+                        <input id="field_birthday" type="datetime" class="form-control" />
+                        <label>電話</label>
+                        <input id="field_phone" type="tel" class="form-control" />
+                        <label>email</label>
+                        <input id="field_email" type="email" class="form-control" />
+                        <label>地址</label>
+                        <input id="field_address" type="address" class="form-control" />
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button id="ButtonAddData" type="button" class="btn btn-info">新增</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 匯入匯出 -->
+    <!-- The Modal : ModalDataExport -->
+    <div class="modal fade" id="ModalDataExport">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">資料匯出匯入</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <textarea id="field_DataJSON" class="form-control" cols="60" rows="10"></textarea>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button id="ButtonImport" type="button" class="btn btn-primary" data-dismiss="modal">匯入</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 編輯與刪除 -->
+    <!-- The Modal -->
+    <div class="modal fade" id="ModalEdit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">修改或刪除</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form>
+                        <label>姓名</label>
+                        <input id="EditField_name" type="text" class="form-control" />
+                        <label>生日</label>
+                        <input id="EditField_birthday" type="datetime" class="form-control" />
+                        <label>電話</label>
+                        <input id="EditField_phone" type="tel" class="form-control" />
+                        <label>email</label>
+                        <input id="EditField_email" type="email" class="form-control" />
+                        <label>地址</label>
+                        <input id="EditField_address" type="address" class="form-control" />
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button id="ButtonUpdate" type="button" class="btn btn-primary" data-dismiss="modal">修改</button>
+                    <button id="ButtonDelete" type="button" class="btn btn-danger" data-dismiss="modal">刪除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</body>
+
+</html>

@@ -30,6 +30,14 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+  <style>
+    /* 把list前面的黑點拿掉 */
+    #guessResults li {
+      list-style-type: none;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -93,38 +101,13 @@
               </div>
               <br>
               <ul id="guessResults" class="list-group">
-                <li class="list-group-item">
+                <!-- <li class="list-group-item">
                   <span class="label label-danger">0A1B</span>
-                  <!--<span class="badge">0A1B</span>-->
+                  <span class="badge">0A1B</span>
                   1234
-                </li>
-                <li class="list-group-item">
-                  <span class="label label-danger">0A3B</span>
-                  <!--<span class="badge">0A3B</span>-->
-                  3456
-                </li>
-                <li class="list-group-item">
-                  <span class="label label-danger">0A2B</span>
-                  <!--<span class="badge">0A2B</span>-->
-                  4567
-                </li>
-                <li class="list-group-item">
-                  <span class="label label-danger">2A0B</span>
-                  <!--<span class="badge">2A0B</span>-->
-                  6089
-                </li>
-                <li class="list-group-item">
-                  <span class="label label-danger">3A0B</span>
-                  <!--<span class="badge">3A0B</span>-->
-                  6345
-                </li>
-                <li class="list-group-item">
-                  <span class="label label-success">4A0B</span>
-                  <!--<span class="badge badge-success">4A0B</span>-->
-                  6385
-                </li>
+                </li> -->
               </ul>
-              <div class="input-group">
+              <div class="input-group" style="margin-block: 100px;">
                 <span class="input-group-addon" id="inputGuess">猜答案</span>
                 <input id="userGuess" type="text" name="" class="form-control" value="" required="required">
                 <span class="input-group-btn">
@@ -137,6 +120,7 @@
       </div>
     </div>
   </div>
+
 
   <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -174,7 +158,7 @@
 
     //當我按下"猜!"
     function checkAnswer() {
-
+     
       //玩家輸入的四個數字轉陣列
       var userGuess = $('#userGuess').val();
       var userGuessArray = [];
@@ -186,54 +170,80 @@
 
 
       //開始比對userGuess跟computerFour
-      //幾個A
+      //幾個A(數字相同)
       let A = $(userGuessArray).filter(computerFour).toArray();
       let numOfA = A.length;
 
-      //幾個B
+      //幾個B(數字位置都相同)
       var B = [];
 
       for (var i = 0; i < 4; i++) {
         if (computerFour[i] == userGuessArray[i]) {
           B[i] = computerFour[i];
-          B=B.filter(function(v){return v!==''});  // 排除空值empty
+          B = B.filter(function (v) { return v !== '' });  // 排除空值empty
           //B=B.filter(Boolean);   這樣寫會不小心排除0
-              
+
         }
         numOfB = B.length;
       }
 
       showResults(numOfA, numOfB);
 
-
-      console.log(computerFour);
-      console.log(userGuessArray);
-      console.log(numOfA);
-      console.log(B);
-      console.log(numOfB);
-
-
+       //按下猜後，清空內容
+       $('#userGuess').val('');
     }
+
 
 
     function showResults(numOfA, numOfB) {
       //玩家猜數字的紀錄
       var target = document.getElementById('guessResults')
       var newNode = document.createElement('li');
-      newNode.innerHTML = numOfA + 'A' + numOfB + 'B';
-      var guessResults = target.appendChild(newNode) + $('#userGuess').val();
 
-      
+      //全部猜對就是顯示綠色
+      if (numOfB == 4) {
+        newNode.innerHTML = '<li class="list-group-item"><span class="label label-success">'
+          + numOfA + 'A' + numOfB + 'B' + "</span>" + " " + $('#userGuess').val() + " 恭喜答對了</li>";
+      }
+
+      else {
+        newNode.innerHTML = '<li class="list-group-item"><span class="label label-danger">'
+          + numOfA + 'A' + numOfB + 'B' + "</span>" + " " + $('#userGuess').val() + "</li>";
+      }
+
+      target.appendChild(newNode);
+
+
       //$("p").html("Hello <b>world</b>!");
       //參考文章(比較html()跟val()差別):https://dotblogs.com.tw/brooke/2015/03/04/150623
     }
 
+
+    //放棄重來
+    function restart() {
+      document.getElementById('guessResults').innerHTML = '';
+      CreatefourNumber();
+    }
+
+    //看答案
+    function cheat() {
+      document.getElementById('guessResults').innerHTML += '<br/>答案是: ' + computerFour;
+
+    }
+
+
     $(document).ready(function () {
       $('#start').click(CreatefourNumber);
-      $('#restart').click();
-      $('#cheat').click();
+      $('#restart').click(restart);
+      $('#cheat').click(cheat);
       $('#guess').click(checkAnswer);
-
+      //當我按enter也可以猜
+      $('#userGuess').keypress(function (e) {
+                if (e.keyCode == 13) {
+                    checkAnswer();
+                    return false;
+                }
+            })
 
     });
 

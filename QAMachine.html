@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 引用bootstrap CSS 4.3.1 版本-->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('#ButtonSend').click(ButtonSend);
+            $('#inputText').keypress(function (e) {
+                if (e.keyCode == 13) {
+                    //enter鍵
+                    ButtonSend();
+                    return false;
+                }
+            })
+        });
+
+
+        function ButtonSend() {
+            var html = $('#TalkContainer').html();
+            var userImput = $('#inputText').val();
+
+            //清空內容
+            $('#inputText').val('');
+
+            //顯示用戶內容
+            $('#TalkContainer').append('<br /><br />用戶: ' + userImput);
+
+            //scroll to bottom
+            //卷軸會固定在最下面
+            $('#TalkContainer').scrollTop($('#TalkContainer')[0].scrollHeight);
+
+            //取得答案
+            GetAnswer(userImput, function (ret) {
+                //如果成功
+                $('#TalkContainer').append('<br /><br />客服: ' + ret.answers[0].answer);
+                //卷軸固定最下面
+                $('#TalkContainer').scrollTop($('#TalkContainer')[0].scrollHeight);
+            });
+
+        }
+
+        //取得答案，並執行whenSuccess
+        //whenSuccess:傳入function作為參數
+        function GetAnswer(msg, whenSuccess) {
+            $.ajax({
+                type: "post",
+                headers: {
+                    "Authorization": "EndpointKey 582202d3-ce36-418e-b471-9f2b67e07782",
+                    "Content-Type": "application/json"
+                },
+                url: "https://qnamachine.azurewebsites.net/qnamaker/knowledgebases/d2a63fbb-9bc9-46ea-adb2-97bc1d802f97/generateAnswer",
+
+                //data從何而來
+                data: JSON.stringify({ "question": msg }),
+                dataType: "json",
+                success: whenSuccess,
+                error: function (err) {
+                    //如果有錯
+                    alert('失敗，在試一次');
+                }
+            });
+
+
+
+        }
+
+
+
+
+
+    </script>
+
+</head>
+
+<body>
+
+    <div class="row" style="margin: 10px">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <!-- 卡片  -->
+            <div class="card">
+                <!-- 卡片標題 -->
+                <span class="card-header bg-primary" style="color:white">
+                    對談機器人
+                </span>
+                <!-- 卡片內容 -->
+                <div class="card-body">
+                    <!-- 對談區 -->
+                    <div id="TalkContainer" style="overflow: auto; height: 300px;">
+                    </div>
+                </div>
+            </div>
+            <form class="form-inline">
+                <input id="inputText" class="form-control" style="width:92%">
+                <button type="button" id="ButtonSend" class="btn btn-primary">送出</button>
+            </form>
+        </div>
+        <div class="col-2"></div>
+
+</body>
+
+</html>

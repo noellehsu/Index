@@ -16,14 +16,18 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
+    <!-- JQuery Tagsinput -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
 
     <script>
         //老師的github source code: https://github.com/isdaviddong/Example-frontend-Phonebook/blob/master/%E9%80%9A%E8%A8%8A%E9%8C%84.html
         //預設資料
         //注意:dat是JSON格式
         var dat = [
-            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
-        ];  
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓', '朋友']
+        ];
 
         //當我按新增時，用Model Dialog顯示
         function ButtonAddDataWindow() {
@@ -38,15 +42,17 @@
                 $('#field_birthday').val(),
                 $('#field_phone').val(),
                 $('#field_email').val(),
-                $('#field_address').val()
+                $('#field_address').val(),
+                $('#field_tags').val()
             ];
 
-            //清空UI
+            //清空UI，這樣使用者可以繼續key下一筆資料
             $('#field_name').val('');
             $('#field_birthday').val('');
             $('#field_phone').val('');
             $('#field_email').val('');
             $('#field_address').val('');
+            $('#field_tags').importTags('');  //tags一定要用importTags('')才能清空
 
             //新增資料
             dat.push(item);
@@ -101,7 +107,9 @@
                 $('#EditField_birthday').val(),
                 $('#EditField_phone').val(),
                 $('#EditField_email').val(),
-                $('#EditField_address').val()
+                $('#EditField_address').val(),
+                $('#EditField_tags').val()
+
             ];
 
             //找到當前筆數，直接置換
@@ -162,7 +170,8 @@
             $('#ButtonImport').click(ButtonImport);
             $('#ButtonUpdate').click(ButtonUpdate); //修改鍵
             $('#ButtonDelete').click(ButtonDelete);
-
+            $('#field_tags').tagsInput();      //setup tag input 
+            $('#EditField_tags').tagsInput();
 
             //參考官網: https://datatables.net/examples/advanced_init/events_live.html
             $('#Table1 tbody').on('click', 'tr', function () {
@@ -174,6 +183,8 @@
                 $('#EditField_phone').val(CurrentEditItem[2]);
                 $('#EditField_email').val(CurrentEditItem[3]);
                 $('#EditField_address').val(CurrentEditItem[4]);
+                $('#EditField_tags').importTags(CurrentEditItem[5]); //一定要用importTags方法!!
+
 
             });
 
@@ -214,7 +225,7 @@
     </nav>
 
     <!-- 表格標頭 -->
-    <div class="container">
+    <div class="container-fluid">
         <div class="row" style="margin: 10px">
             <div class="col-md-12">
                 <table id="Table1" class="display">
@@ -225,6 +236,8 @@
                             <th>電話</th>
                             <th>email</th>
                             <th>地址</th>
+                            <th>分類</th>
+
                         </tr>
                     </thead>
                     <!-- <tbody>
@@ -281,6 +294,10 @@
                         <input id="field_email" type="email" class="form-control" />
                         <label>地址</label>
                         <input id="field_address" type="address" class="form-control" />
+                        <label>分類</label>
+                        <textarea id="field_tags" cols="50" rows="5" class="form-control"
+                            value="foo,bar,baz"></textarea>
+                        <!-- 這邊一定要加上alue="foo,bar,baz"告訴程式你想要用甚麼方式呈現陣列-->
                     </form>
                 </div>
 
@@ -344,6 +361,9 @@
                         <input id="EditField_email" type="email" class="form-control" />
                         <label>地址</label>
                         <input id="EditField_address" type="address" class="form-control" />
+                        <label>分類</label>
+                        <textarea id="EditField_tags" cols="50" rows="5" class="form-control"
+                            value="foo,bar,baz"></textarea>
                     </form>
                 </div>
                 <!-- Modal footer -->
