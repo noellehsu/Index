@@ -161,7 +161,7 @@
      
       //玩家輸入的四個數字轉陣列
       var userGuess = $('#userGuess').val();
-      var userGuessArray = [];
+      var userGuessArray = [];                                //parseInt就是只取整數部分
       userGuessArray[0] = parseInt(userGuess / 1000);         //4321取4
       userGuessArray[1] = parseInt((userGuess % 1000) / 100); //4321取3
       userGuessArray[2] = parseInt((userGuess % 100) / 10)    //4321取2
