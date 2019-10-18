@@ -15,6 +15,13 @@
 
 
     <script>
+
+        /* 觀念 
+              1. 這點很難:搞懂 GetAnswer(msg, whenSuccess) 怎麼傳遞參數
+              2. whenSuccess是委派，ajax被成功呼叫後會執行whenSuccess帶進來的function
+              3. JQuery的append()跟scrollTop()方法          
+        */
+
         $(document).ready(function () {
             $('#ButtonSend').click(ButtonSend);
             $('#inputText').keypress(function (e) {

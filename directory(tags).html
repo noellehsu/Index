@@ -20,13 +20,19 @@
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
+</head>
+
+<body>
 
     <script>
-        //老師的github source code: https://github.com/isdaviddong/Example-frontend-Phonebook/blob/master/%E9%80%9A%E8%A8%8A%E9%8C%84.html
-        //預設資料
-        //注意:dat是JSON格式
+
+        /* 觀念
+          1. $('#field_tags').importTags(''); 
+        */
+
+
         var dat = [
-            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓', '朋友']
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓', []]
         ];
 
         //當我按新增時，用Model Dialog顯示
@@ -130,13 +136,11 @@
         }
 
 
-        //先從localStorage載入資料，再呼叫RefreshData
-        //LoadData 把新增的dat存到硬碟
+        //先從localStorage取資料，再呼叫RefreshData
         function LoadData() {
             if (localStorage.getItem('Directory') != null) {
                 var str = localStorage.getItem('Directory');
 
-                //把str轉成JSON檔，取回資料
                 dat = JSON.parse(str);
             }
             RefreshData();
@@ -185,22 +189,14 @@
                 $('#EditField_address').val(CurrentEditItem[4]);
                 $('#EditField_tags').importTags(CurrentEditItem[5]); //一定要用importTags方法!!
 
-
             });
-
+            //把localStorage的資料轉回JSON檔，取回資料
             LoadData();
-            //這邊務必要加LoadData!!!!不然dat只存在硬碟無法跑到前端
 
         });
 
     </script>
 
-
-</head>
-
-
-
-<body>
     <!-- navibar -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <ul class="navbar-nav">
@@ -237,7 +233,6 @@
                             <th>email</th>
                             <th>地址</th>
                             <th>分類</th>
-
                         </tr>
                     </thead>
                     <!-- <tbody>
@@ -295,9 +290,7 @@
                         <label>地址</label>
                         <input id="field_address" type="address" class="form-control" />
                         <label>分類</label>
-                        <textarea id="field_tags" cols="50" rows="5" class="form-control"
-                            value="foo,bar,baz"></textarea>
-                        <!-- 這邊一定要加上alue="foo,bar,baz"告訴程式你想要用甚麼方式呈現陣列-->
+                        <textarea id="field_tags" cols="50" rows="5" class="form-control"></textarea>
                     </form>
                 </div>
 
@@ -362,8 +355,7 @@
                         <label>地址</label>
                         <input id="EditField_address" type="address" class="form-control" />
                         <label>分類</label>
-                        <textarea id="EditField_tags" cols="50" rows="5" class="form-control"
-                            value="foo,bar,baz"></textarea>
+                        <textarea id="EditField_tags" cols="50" rows="5" class="form-control"></textarea>
                     </form>
                 </div>
                 <!-- Modal footer -->
@@ -374,10 +366,6 @@
             </div>
         </div>
     </div>
-
-
-
-
 
 </body>
 

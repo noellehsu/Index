@@ -11,11 +11,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-
 </head>
 
 <script>
+
+  /*  觀念
+      1.  $('#inputScreen').val($('#inputScreen').val() + this.innerText); 
+      2.  $('#inputScreen').val(""); 
+      3.  eval($('#inputScreen').val());
+      4. $('#buttons button').click(ButtonClick);
+  */
+
   function ButtonClick() {
     //按等號時進行運算
     if (this.innerText == "=") {
@@ -23,7 +29,7 @@
       $('#inputScreen').val(v);
       return;
     }
-  
+
     //當按下AC清除鍵時
     if (this.innerText == "AC") {
       $('#inputScreen').val("");

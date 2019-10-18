@@ -23,6 +23,14 @@
 </head>
 
 <script>
+    /*  觀念
+        1. Date的擴充套件
+        2. 如何安裝電子鐘字體
+        3.  setTimeout(委派方法, 毫秒)     
+    */
+
+
+
     // 對Date的擴充套件，將 Date 轉化為指定格式的String
     // 月(M)、日(d)、小時(h)、分(m)、秒(s)、季度(q) 可以用 1-2 個佔位符，
     // 年(y)可以用 1-4 個佔位符，毫秒(S)只能用 1 個佔位符(是 1-3 位的數字)
@@ -45,7 +53,10 @@
                 (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     }
-    
+
+
+
+    var isPause = false;
 
     function ButtonStart() {
         isPause = false;
@@ -56,7 +67,6 @@
         isPause = true;
     }
 
-    var isPause = false;
 
     function ShowClock() {
         var dt = new Date();
@@ -70,19 +80,6 @@
         $('#ButtonStop').click(ButtonStop);
         $('#ButtonStart').click(ButtonStart);
     });
-
-
-    // 下面的寫法要記得加上onclick='ShowClock()'
-    // function ShowClock() {
-    //     var dt = new Date();
-    //     var result = dt.Format("yyyy-MM-dd hh:mm:ss");
-    //     document.getElementById('label1').innerHTML = result;
-    //     setTimeout(ShowClock, 1000);
-    // }
-    //------------------------------------------
-    //     //Button_Start不要加()，表示invoke
-    //     //每一秒就呼叫一次自己
-
 
 </script>
 

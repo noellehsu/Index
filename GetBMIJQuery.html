@@ -15,13 +15,14 @@
 
 </head>
 
-<script>  
-     //計算結果
-     function Show(msg) {
-        //document.getElementById('result').innerHTML += msg + "<br />";
-        $('#result').html($('#result').html() + msg + "<br />");
-    }
-    
+<script>
+    /* 觀念
+       1. 用JQuery抓身高體重的值，用物件設計方法
+       2. var BmiObj物件在全域變數，裡面的this指的是這個物件
+       3. 物件可以設計方法，BmiOb物件裡面有一個方法屬性叫做GetBmi
+    */
+
+
     //JavaScript中的物件可以設計方法
     var BmiObj = {
         height: 0,
@@ -32,11 +33,10 @@
             return bmi;
         }
     };
-   
 
+    //計算結果
     function Button1_Click() {
-
-        BmiObj.height = $('#txbheight').val();
+        BmiObj.height = $('#txbheight').val();  //這邊如果用this.height會抓不到資料
         BmiObj.weight = $('#txbweight').val();
         let bmi = BmiObj.GetBmi();
         Show("你的BMI是" + bmi);
@@ -45,8 +45,15 @@
     //清除表單
     function Button2_Click() {
         //document.getElementById('result').innerHTML = "";
-        $('#result').html(""); 
+        $('#result').html("");
     }
+
+
+    function Show(msg) {
+        //document.getElementById('result').innerHTML += msg + "<br />";
+        $('#result').html($('#result').html() + msg + "<br />");
+    }
+
 
     //初始化
     $(document).ready(function () {

@@ -15,13 +15,27 @@
     <!--使用 https://datatables.net/  這段引用如果放在JQuery引用之上會報錯-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+</head>
+
+<body>
     <script>
-        //老師的github source code: https://github.com/isdaviddong/Example-frontend-Phonebook/blob/master/%E9%80%9A%E8%A8%8A%E9%8C%84.html
-        //預設資料
-        //注意:dat是JSON格式
+
+        /* 觀念
+          1. 老師的github source code: https://github.com/isdaviddong/Example-frontend-Phonebook/blob/master/%E9%80%9A%E8%A8%8A%E9%8C%84.html
+          2. JSON.stringify()與JSON.parse()應用
+             只有string才能儲存資料到localStorage
+             當我從localStorage取回資料放回dat陣列時，一定要先轉回JSON格式
+          3. $('#ButtonImport').attr('disabled', 'true');
+          4. $('#field_DataJSON').attr('readonly', 'readonly');
+          5. dat.splice(n, 1); 刪除當下點到的一筆
+    
+        */
+
+
+        //預設資料dat是JSON格式
         var dat = [
             ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
-        ];  
+        ];
 
         //當我按新增時，用Model Dialog顯示
         function ButtonAddDataWindow() {
@@ -56,7 +70,6 @@
             //重新載入資料
             LoadData();
         }
-
 
 
         //當我點選匯出
@@ -183,11 +196,8 @@
     </script>
 
 
-</head>
 
 
-
-<body>
     <!-- navibar -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <ul class="navbar-nav">

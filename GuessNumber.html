@@ -31,6 +31,9 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+  <!-- Bootstrap core JavaScript-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
   <style>
     /* 把list前面的黑點拿掉 */
     #guessResults li {
@@ -41,6 +44,127 @@
 </head>
 
 <body>
+
+  <script>
+    /* 觀念
+      1. 用parseInt()將四位數轉成陣列
+      2. $(array1).filter(array1).toArray() 兩個陣列的差集再做成新的陣列
+      3. 若不使用陣列比對四個數字，可以用這個工具: string.charAt(index); 
+      4. array.filter(function (v) { return v !== '' });   排除陣列的空值，並回傳新的陣列長度
+      5. 讓enter按鍵綁定checkAnswer()
+      6. 生成四個隨機數可以用while寫更精簡(參見另一版本)
+    */
+
+
+    //一定要放全域，這樣只會呼叫一次CreatefourNumber()
+    var computerFour;
+
+    $(document).ready(function () {
+      $('#start').click(CreatefourNumber);
+      $('#restart').click(restart);
+      $('#cheat').click(cheat);
+      $('#guess').click(checkAnswer);
+      //當我按enter也可以猜
+      $('#userGuess').keypress(function (e) {
+        if (e.keyCode == 13) {
+          checkAnswer();
+          return false;
+        }
+
+      })
+
+    });
+
+    //生出一個隨機數
+    function createNumber() {
+      var n = Math.floor(Math.random() * 10);
+      return n;
+    }
+
+    //電腦生成四個隨機數字
+    function CreatefourNumber() {
+      var n = createNumber();
+      var fourNumber = [];
+      fourNumber[0] = n;
+
+      for (let i = 1; i < 4; i) {
+        fourNumber[i] = createNumber();
+        if (fourNumber[i] != fourNumber[0] && fourNumber[i] != fourNumber[i - 1] && fourNumber[i] != fourNumber[i - 2])
+          i++;
+      }
+      computerFour = fourNumber;
+    }
+
+    //當我按下"猜!"
+    function checkAnswer() {
+
+      //玩家輸入的四個數字轉陣列
+      var userGuess = $('#userGuess').val();
+      var userGuessArray = [];                                //parseInt就是只取整數部分
+      userGuessArray[0] = parseInt(userGuess / 1000);         //4321取4
+      userGuessArray[1] = parseInt((userGuess % 1000) / 100); //4321取3
+      userGuessArray[2] = parseInt((userGuess % 100) / 10)    //4321取2
+      userGuessArray[3] = parseInt((userGuess % 10))          //4321取1
+
+
+      //開始比對userGuess跟computerFour
+      //幾個A(數字相同)
+      let A = $(userGuessArray).filter(computerFour).toArray();
+      let numOfA = A.length;
+
+      //幾個B(數字位置都相同)
+      var B = [];
+
+      for (var i = 0; i < 4; i++) {
+        if (computerFour[i] == userGuessArray[i]) {
+          B[i] = computerFour[i];
+          B = B.filter(function (v) { return v !== '' });  // 排除空值empty
+          //B=B.filter(Boolean);   這樣寫會不小心排除0
+        }
+        numOfB = B.length;
+      }
+
+      showResults(numOfA, numOfB, userGuess);
+
+      //按下猜後，清空輸入框
+      $('#userGuess').val('');
+    }
+
+    //顯示玩家猜數字的紀錄
+    function showResults(numOfA, numOfB, userGuess) {
+      var li = document.createElement('li');
+
+      //全部猜對就是顯示綠色
+      if (numOfB == 4) {
+        li.innerHTML = '<li class="list-group-item"><span class="label label-success">'
+          + numOfA + 'A' + numOfB + 'B' + "</span>" + " " + userGuess + " 恭喜答對了</li>";
+      }
+
+      else {
+        li.innerHTML = '<li class="list-group-item"><span class="label label-danger">'
+          + numOfA + 'A' + numOfB + 'B' + "</span>" + " " + userGuess + "</li>";
+      }
+      document.getElementById('guessResults').appendChild(li);
+
+
+      //$("p").html("Hello <b>world</b>!");
+      //參考文章(比較html()跟val()差別):https://dotblogs.com.tw/brooke/2015/03/04/150623
+    }
+
+
+    //放棄重來
+    function restart() {
+      document.getElementById('guessResults').innerHTML = '';
+      CreatefourNumber();
+    }
+
+    //看答案
+    function cheat() {
+      document.getElementById('guessResults').innerHTML += '<br/>答案是: ' + computerFour;
+
+    }
+
+  </script>
 
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
@@ -103,7 +227,6 @@
               <ul id="guessResults" class="list-group">
                 <!-- <li class="list-group-item">
                   <span class="label label-danger">0A1B</span>
-                  <span class="badge">0A1B</span>
                   1234
                 </li> -->
               </ul>
@@ -121,134 +244,6 @@
     </div>
   </div>
 
-
-  <!-- Bootstrap core JavaScript
-    ================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <!--<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>-->
-  <!-- <script src="bootstrap.min.js"></script> -->
-  <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-  <!--<script src="../../assets/js/vendor/holder.min.js"></script>-->
-  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
-  <script>
-
-    var computerFour;
-
-    //生出一個隨機數
-    function createNumber() {
-      var n = Math.floor(Math.random() * 10);
-      return n;
-    }
-
-    //電腦生成四個隨機數字
-    function CreatefourNumber() {
-      var n = createNumber();
-      var fourNumber = [];
-      fourNumber[0] = n;
-
-      for (let i = 1; i < 4; i) {
-        fourNumber[i] = createNumber();
-        if (fourNumber[i] != fourNumber[0] && fourNumber[i] != fourNumber[i - 1] && fourNumber[i] != fourNumber[i - 2])
-          i++;
-      }
-      computerFour = fourNumber;
-    }
-
-    //當我按下"猜!"
-    function checkAnswer() {
-     
-      //玩家輸入的四個數字轉陣列
-      var userGuess = $('#userGuess').val();
-      var userGuessArray = [];                                //parseInt就是只取整數部分
-      userGuessArray[0] = parseInt(userGuess / 1000);         //4321取4
-      userGuessArray[1] = parseInt((userGuess % 1000) / 100); //4321取3
-      userGuessArray[2] = parseInt((userGuess % 100) / 10)    //4321取2
-      userGuessArray[3] = parseInt((userGuess % 10))          //4321取1
-
-
-
-      //開始比對userGuess跟computerFour
-      //幾個A(數字相同)
-      let A = $(userGuessArray).filter(computerFour).toArray();
-      let numOfA = A.length;
-
-      //幾個B(數字位置都相同)
-      var B = [];
-
-      for (var i = 0; i < 4; i++) {
-        if (computerFour[i] == userGuessArray[i]) {
-          B[i] = computerFour[i];
-          B = B.filter(function (v) { return v !== '' });  // 排除空值empty
-          //B=B.filter(Boolean);   這樣寫會不小心排除0
-
-        }
-        numOfB = B.length;
-      }
-
-      showResults(numOfA, numOfB);
-
-       //按下猜後，清空內容
-       $('#userGuess').val('');
-    }
-
-
-
-    function showResults(numOfA, numOfB) {
-      //玩家猜數字的紀錄
-      var target = document.getElementById('guessResults')
-      var newNode = document.createElement('li');
-
-      //全部猜對就是顯示綠色
-      if (numOfB == 4) {
-        newNode.innerHTML = '<li class="list-group-item"><span class="label label-success">'
-          + numOfA + 'A' + numOfB + 'B' + "</span>" + " " + $('#userGuess').val() + " 恭喜答對了</li>";
-      }
-
-      else {
-        newNode.innerHTML = '<li class="list-group-item"><span class="label label-danger">'
-          + numOfA + 'A' + numOfB + 'B' + "</span>" + " " + $('#userGuess').val() + "</li>";
-      }
-
-      target.appendChild(newNode);
-
-
-      //$("p").html("Hello <b>world</b>!");
-      //參考文章(比較html()跟val()差別):https://dotblogs.com.tw/brooke/2015/03/04/150623
-    }
-
-
-    //放棄重來
-    function restart() {
-      document.getElementById('guessResults').innerHTML = '';
-      CreatefourNumber();
-    }
-
-    //看答案
-    function cheat() {
-      document.getElementById('guessResults').innerHTML += '<br/>答案是: ' + computerFour;
-
-    }
-
-
-    $(document).ready(function () {
-      $('#start').click(CreatefourNumber);
-      $('#restart').click(restart);
-      $('#cheat').click(cheat);
-      $('#guess').click(checkAnswer);
-      //當我按enter也可以猜
-      $('#userGuess').keypress(function (e) {
-                if (e.keyCode == 13) {
-                    checkAnswer();
-                    return false;
-                }
-                
-            })
-
-    });
-
-  </script>
 </body>
 
 </html>
