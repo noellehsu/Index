@@ -8,9 +8,9 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link rel="icon" href="../../favicon.ico">
 
-    <title>Guess number</title>
+    <title>生命靈數</title>
 
     <!-- Bootstrap core CSS -->
     <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
@@ -30,23 +30,10 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-
-    <!-- datetimepicker要引用這些 -->
+    <!-- Bootstrap core JavaScript-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />
 
-    <style>
-        /* 把list前面的黑點拿掉 */
-        #guessResults li {
-            list-style-type: none;
-        }
-    </style>
+
 
 </head>
 
@@ -54,32 +41,155 @@
 
     <script>
 
+        /* 觀念
+              1. 資料結構的設計，先後順序很重要，checkConstellation()跟 getLifeNumber()一定要放checkResult()以前
+              2. string與number的型別轉換
+              3. inputDate從日期格式的input會回傳'2019-01-01'的string
+              
+            */
+
+
+
+        var inputDate;
+        var lifeNumber;
+
+
         $(document).ready(function () {
             $('#checkResultButton').click(function (e) {
-                checkResult();
+                checkResult();         // ajax方法抓後端資料
+                getLifeNumber();       //拿生日去計算生命靈數
             });
 
         });
 
+
+
+        //判斷星座
+        function checkConstellation() {
+
+            //inputDate會回傳'2019-01-01'的string
+            inputDate = $("#inputDate").val();
+            var num = (inputDate.split('-')); //分成'2019'、'01'、'01'三個string
+            month = parseInt(num[1]);
+            date = parseInt(num[2]);
+
+            console.log(month);
+            console.log(date);
+
+            var constellation = [];
+            if (month == 3 && date >= 21 || month == 4 && date <= 20) {
+                constellation[0] = "牧羊座";
+                constellation[1] = "aries";
+                return constellation;
+            } else if (month == 4 && date >= 21 || month == 5 && date <= 20) {
+                constellation[0] = "金牛座";
+                constellation[1] = "taurus";
+                return constellation;
+            } else if (month == 5 && date >= 21 || month == 6 && date <= 20) {
+                constellation[0] = "雙子座";
+                constellation[1] = "gemini";
+                return constellation;
+            } else if (month == 6 && date >= 21 || month == 7 && date <= 22) {
+                constellation[0] = "巨蟹座";
+                constellation[1] = "cancer";
+                return constellation;
+            } else if (month == 7 && date >= 23 || month == 8 && date <= 22) {
+                constellation[0] = "獅子座";
+                constellation[1] = "leo";
+                return constellation;
+            } else if (month == 8 && date >= 23 || month == 9 && date <= 22) {
+                constellation[0] = "處女座";
+                constellation[1] = "virgo";
+                return constellation;
+            } else if (month == 9 && date >= 23 || month == 10 && date <= 23) {
+                constellation[0] = "天秤座";
+                constellation[1] = "libra";
+                return constellation;
+            } else if (month == 10 && date >= 24 || month == 11 && date <= 22) {
+                constellation[0] = "天蠍座";
+                constellation[1] = "scorpio";
+                return constellation;
+            } else if (month == 11 && date >= 23 || month == 12 && date <= 22) {
+                constellation[0] = "射手座";
+                constellation[1] = "sagittarius";
+                return constellation;
+            } else if (month == 12 && date >= 23 || month == 1 && date <= 21) {
+                constellation[0] = "摩羯座";
+                constellation[1] = "capricorn";
+                return constellation;
+            } else if (month == 1 && date >= 22 || month == 2 && date <= 19) {
+                constellation[0] = "水瓶座";
+                constellation[1] = "aquarius";
+                return constellation;
+            } else if (month == 2 && date >= 20 || month == 3 && date <= 20) {
+                constellation[0] = "雙魚座";
+                constellation[1] = "pisces";
+                return constellation;
+            }
+        }
+
+
+        //計算生命靈數
+        function getLifeNumber() {
+
+            //inputDate會回傳'2019-01-01'的string
+            inputDate = $("#inputDate").val();
+            var num = (inputDate.split('-')); //分成'2019'、'01'、'01'三個string
+            year = num[0];  //'2019'
+            month = num[1]; //'01'
+            date = num[2];  //'01'
+
+            // 把陣列分割
+            year = year.split('');   //['2019'] 變成 ['2','0','1','9']
+            month = month.split(''); //['01']   變成 ['0','1']
+            date = date.split('');
+
+            // 用concat()把多個陣列合成一個陣列 ["2", "0", "1", "9", "0", "1", "0", "1"]
+            var arr = year.concat(month.concat(date));
+
+
+            var sum = 0;
+
+            for (var i = 0; i < arr.length; i++) {
+                sum += parseInt(arr[i]); //parseInt()把string陣列轉成數字陣列才能做相加
+            }
+            if (sum > 9) {
+                arr = sum.toString().split(''); //相加等於14，這一行會變成['1','4']
+                lifeNumber = parseInt(arr[0]) + parseInt(arr[1]); //把1+4
+            }
+
+            else lifeNumber = sum;
+
+        }
+
+
+
+
+        //分析結果，用去後ajax方法去後端撈資料
         function checkResult() {
-            var source = $('#datetimepicker1').datetimepicker();
+
+
+            //原本只有寫checkConstellation(); 反而一直報錯，都找不到原因
+            constellation = checkConstellation();
+
 
             $.ajax({
-                type: "post",
-                headers: {
-                    "Ocp-Apim-Subscription-Key": "不知道要不要輸入",
-                    "Content-Type": "application/json"
-                },
-                url: "https://buildschoolnumerology.azurewebsites.net/api/Number/Numerology?constellation=leo",
-                data: JSON.stringify([{
-                    "Text": source
-                }]),
+                type: "Get",
+                //也可以在網址後寫上 ?constellation=${constellation}
+                url: 'https://buildschoolnumerology.azurewebsites.net/api/Number/Numerology',
+                data: { "constellation": constellation[1]},
                 dataType: "json",
                 success: function (response) {
-                        $('#showResult').html(response[0].constellation[0].lookup);
-                    
-                }
+                    $('#showResult').html(response.lookup[lifeNumber - 1]);
+                    $('#showBirthday').html(inputDate);
+                    $('#showConstellation').html(constellation[0]);
+                    $('#showLifeNumber').html(lifeNumber);
+                },
+                error: function () {
+                    alert("輸入錯誤");
+                },
             });
+
 
         }
 
@@ -136,11 +246,11 @@
                 </ul>
                 <ul class="nav nav-sidebar">
                     <li><a href="">Nav item again</a></li>
-                    <li><a href="">One more nav</a></li>
                     <li><a href="">Another nav item</a></li>
                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <li><a href="">One more nav</a></li>
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
@@ -148,36 +258,26 @@
 
                             <div class="input-group" style="margin-block: 100px;">
 
-
-                                <!-- datetimepicker -->
-                                <script type="text/javascript">
-                                    $(function () {
-                                        $('#datetimepicker1').datetimepicker();
-                                    });
-                                </script>
-                                <div class="form-group">
-                                    <div class="input-group date" id="datetimepicker1">
-                                        <input type="text" class="form-control" />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
+                                <!-- 輸入日期並分析結果 -->
+                                <div class="input-group">
+                                    <input type="date" id="inputDate" class="form-control" value="2019-01-01" required>
+                                    <span class="input-group-btn">
+                                        <button id="checkResultButton" class="btn btn-primary">分析結果</button>
+                                    </span>
                                 </div>
 
-
-
-
-                                <span class="input-group-btn">
-                                    <a id="checkResultButton" type="button" class="btn btn-primary">分析結果</a>
-                                </span>
 
                             </div>
 
                             <br>
                             <ul id="analysis" class="list-group">
                                 <li class="list-group-item">
-                                    <span class="label label-danger">生日</span>
-                                    <label id="showResult">分析結果</label>
+                                    <span id="showBirthday" class="label label-danger">生日</span>
+                                    <span>你的星座是:<span id="showConstellation"></span></span>
+                                    <br>
+                                    <span>你的生命靈數是: <span id="showLifeNumber"></span></span>
+                                    <br>
+                                    <span id="showResult"></span>
                                 </li>
                             </ul>
                         </div>
@@ -191,7 +291,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
     <!--<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>-->
     <!-- <script src="bootstrap.min.js"></script> -->
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
