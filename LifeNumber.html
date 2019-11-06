@@ -42,17 +42,13 @@
     <script>
 
         /* 觀念
-              1. 資料結構的設計，先後順序很重要，checkConstellation()跟 getLifeNumber()一定要放checkResult()以前
-              2. string與number的型別轉換
-              3. inputDate從日期格式的input會回傳'2019-01-01'的string
-              
-            */
-
-
+             1. 資料結構的設計，先後順序很重要，checkConstellation()跟 getLifeNumber()一定要放checkResult()以前
+             2. string與number的型別轉換
+             3. inputDate從日期格式的input會回傳'2019-01-01'的string    
+        */
 
         var inputDate;
         var lifeNumber;
-
 
         $(document).ready(function () {
             $('#checkResultButton').click(function (e) {
@@ -160,6 +156,7 @@
 
             else lifeNumber = sum;
 
+            console.log(lifeNumber);
         }
 
 
@@ -177,7 +174,7 @@
                 type: "Get",
                 //也可以在網址後寫上 ?constellation=${constellation}
                 url: 'https://buildschoolnumerology.azurewebsites.net/api/Number/Numerology',
-                data: { "constellation": constellation[1]},
+                data: { "constellation": constellation[1] },
                 dataType: "json",
                 success: function (response) {
                     $('#showResult').html(response.lookup[lifeNumber - 1]);
